@@ -4,7 +4,7 @@ import torch.nn as nn
 import torchvision.models as models
 
 class Agent(nn.Module):
-    def_init__(self,num_bins=3):
+    def _init__(self,num_bins=3):
         super(Agent,self).__init__()
         #Loading pre trained model for image recognition
         self.train=models.shufflenet_v2_x0_5(pretrained=True)
