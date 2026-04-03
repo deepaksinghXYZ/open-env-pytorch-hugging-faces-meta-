@@ -1,0 +1,23 @@
+#The warehouse manager
+import torch
+import torch.nn as nn
+import torchvision.models as models
+
+class Agent(nn.Module):
+    def__init__(self,num_bins=3):
+        super(Agent,self).__init__()
+        #Loading pre trained model for image recognition
+        self.network=models.shufflenet_v2_x0_5(pretrained=True)
+        #Replace last to match our sorting task
+        num_ftrs=self.network.fc.in_features
+        self.network.fc=nn.Linear(num_ftrs,num_bins)
+    def forward(self,x):
+        action_logistics=self.network(x)
+        return action_logistics
+model=Agent(num_bins=3)
+input_image=torch.randn(1,3,224,224)
+decision=model(input_image)
+chosen_bin=torch.argmax(decision,dim=1)
+print("Chosen bin for item",chosen_bin.item())
+
+
